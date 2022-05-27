@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,6 +42,15 @@ public class FrontendClassicTodoApplication {
     public String addItem(String toDo){
 
         template.postForEntity(endpoint+"/todos/"+toDo, null, String.class);
+        return "redirect:/";
+
+    }
+
+    @PostMapping("{toDo}")
+    public String setItemDone(@PathVariable String toDo){
+
+
+        template.delete(endpoint+"/todos/"+toDo);
         return "redirect:/";
 
     }
