@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
@@ -33,6 +34,14 @@ public class FrontendClassicTodoApplication {
         ResponseEntity<String[]> response = template.getForEntity(endpoint + "/todos/", String[].class);
         if(response != null) model.addAttribute("items", response.getBody());
         return "items";
+
+    }
+
+    @PostMapping
+    public String addItem(String toDo){
+
+        template.postForEntity(endpoint+"/todos/"+toDo, null, String.class);
+        return "redirect:/";
 
     }
 
